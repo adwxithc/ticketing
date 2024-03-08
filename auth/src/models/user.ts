@@ -13,6 +13,7 @@ interface UserAttr{
 
 interface UserModel extends mongoose.Model <UserDoc>{
     build(attrs: UserAttr) : UserDoc
+    
 }
 
 
@@ -21,6 +22,7 @@ interface UserModel extends mongoose.Model <UserDoc>{
 interface UserDoc extends mongoose.Document {
     email: string;
     password: string;
+    matchPassword(enteredPassword: string): boolean
 }
 
 const userSchema = new mongoose.Schema({
@@ -51,6 +53,10 @@ userSchema.pre('save',async function(next){
     this.password=await bcrypt.hash(this.password,salt)
     
 })
+
+userSchema.methods.matchPassword= async function(enteredPassword: string){
+    return bcrypt.compare(enteredPassword,this.password)
+}
 
 userSchema.statics.build = (attrs: UserAttr)=>{
     return new User(attrs);
