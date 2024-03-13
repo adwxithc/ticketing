@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 // An interface that describes the properties
 // that are required to create a new user
@@ -56,6 +56,7 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.matchPassword = async function (enteredPassword: string) {
   return bcrypt.compare(enteredPassword, this.password);
+  
 };
 
 userSchema.statics.build = (attrs: UserAttr) => {
@@ -65,3 +66,4 @@ userSchema.statics.build = (attrs: UserAttr) => {
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export { User };
+
