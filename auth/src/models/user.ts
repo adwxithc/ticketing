@@ -56,7 +56,6 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.matchPassword = async function (enteredPassword: string) {
   return bcrypt.compare(enteredPassword, this.password);
-  
 };
 
 userSchema.statics.build = (attrs: UserAttr) => {
@@ -66,4 +65,3 @@ userSchema.statics.build = (attrs: UserAttr) => {
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export { User };
-

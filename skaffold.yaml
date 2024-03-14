@@ -28,5 +28,13 @@ build:
             dest: .
           - src: '**/*.js'
             dest: .
+    - image: asia.gcr.io/ticketing-dev-416808/tickets2
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
 
         
